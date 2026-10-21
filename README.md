@@ -5,7 +5,7 @@
 **Turn a pile of card designs into one tilted flat-lay photo.**<br>
 Upload, arrange, light it, save as PNG or WebP. Everything runs in your browser.
 
-[**Live demo**](https://flatlay-mockup.vercel.app) · [Features](#features) · [How to use](#how-to-use) · [Run locally](#run-locally) · [Bahasa Indonesia](#bahasa-indonesia)
+[**Live demo**](https://flatlay.revaldys.biz.id) · [Features](#features) · [How to use](#how-to-use) · [Run locally](#run-locally) · [Bahasa Indonesia](#bahasa-indonesia)
 
 <br>
 

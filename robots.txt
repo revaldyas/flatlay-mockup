@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://flatlay-mockup.vercel.app/sitemap.xml
+Sitemap: https://flatlay.revaldys.biz.id/sitemap.xml
