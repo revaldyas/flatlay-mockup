@@ -1187,53 +1187,21 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
     return c.toDataURL('image/jpeg', 0.75);
   }
 
-  function makeSamples() {
-    const W = 1000, H = 1250;
-    const F = (w, s) => w + ' ' + s + 'px Archivo, "Helvetica Neue", Arial, sans-serif';
-    const out = [];
-    for (let i = 0; i < 3; i++) {
-      const c = document.createElement('canvas'); c.width = W; c.height = H;
-      const g = c.getContext('2d');
-      g.textBaseline = 'alphabetic';
-      if (i === 0) {
-        g.fillStyle = '#202020'; g.fillRect(0, 0, W, H);
-        g.fillStyle = '#eeeeeb'; g.beginPath(); g.arc(785, 365, 310, 0, Math.PI * 2); g.fill();
-        [[725, 425, -1], [820, 490, 1], [770, 300, 1], [895, 335, -1]].forEach(function (p) {
-          g.save(); g.translate(p[0], p[1]); g.rotate(p[2] * -.55);
-          g.beginPath(); g.moveTo(0, 125); g.bezierCurveTo(-65, 65, -45, 5, 0, 0); g.bezierCurveTo(45, 45, 42, 88, 0, 125); g.fillStyle = '#a3a39e'; g.fill();
-          g.restore();
-        });
-        g.fillStyle = '#eeeeeb'; g.font = F(600, 31); g.fillText('SERA BOTANICALS', 72, 100);
-        g.fillStyle = '#a3a39e'; g.fillRect(74, 830, 82, 7);
-        g.fillStyle = '#eeeeeb'; g.font = F(700, 100); g.fillText('Grow', 70, 970); g.fillText('slowly.', 70, 1080);
-        g.font = F(500, 24); g.fillStyle = '#bcbcb8'; g.fillText('A little room to breathe.', 74, 1150);
-      } else if (i === 1) {
-        g.fillStyle = '#eeeeeb'; g.fillRect(0, 0, W, H);
-        g.fillStyle = '#222222'; g.beginPath(); g.arc(500, 480, 300, 0, Math.PI * 2); g.fill();
-        g.fillStyle = '#bcbcb8'; g.beginPath(); g.arc(500, 480, 220, 0, Math.PI * 2); g.fill();
-        g.fillStyle = '#777777'; g.beginPath(); g.arc(500, 480, 175, 0, Math.PI * 2); g.fill();
-        g.strokeStyle = '#eeeeeb'; g.lineWidth = 18; g.beginPath(); g.arc(500, 480, 120, 0, Math.PI * 2); g.stroke();
-        g.fillStyle = '#222222'; g.beginPath(); g.roundRect(210, 780, 580, 145, 72); g.fill();
-        g.beginPath(); g.arc(790, 850, 80, -Math.PI / 2, Math.PI / 2); g.strokeStyle = '#222222'; g.lineWidth = 34; g.stroke();
-        g.fillStyle = '#222222'; g.textAlign = 'center'; g.font = F(700, 28); g.fillText('GOOD THINGS TAKE TIME', 500, 90);
-        g.font = F(700, 68); g.fillText('MORROW', 500, 870);
-        g.font = F(500, 23); g.fillStyle = '#222222'; g.fillText('COFFEE  ·  SMALL BATCH ROASTERS', 500, 1035);
-        g.font = F(500, 20); g.fillText('BANDUNG  /  EST. 2024', 500, 1165); g.textAlign = 'left';
-      } else {
-        g.fillStyle = '#eeeeeb'; g.fillRect(0, 0, W, H);
-        g.fillStyle = '#222222'; g.font = F(700, 30); g.fillText('FORME  /  OBJECTS FOR LIVING', 72, 94);
-        g.strokeStyle = '#222222'; g.lineWidth = 5; g.beginPath(); g.moveTo(72, 125); g.lineTo(928, 125); g.stroke();
-        g.fillStyle = '#777777'; g.beginPath(); g.roundRect(185, 220, 630, 600, 300); g.fill();
-        g.fillStyle = '#eeeeeb'; g.beginPath(); g.arc(500, 535, 190, Math.PI, 0); g.lineTo(690, 730); g.lineTo(310, 730); g.closePath(); g.fill();
-        g.fillStyle = '#bcbcb8'; g.beginPath(); g.arc(500, 550, 120, Math.PI, 0); g.lineTo(620, 680); g.lineTo(380, 680); g.closePath(); g.fill();
-        g.fillStyle = '#222222'; g.font = F(700, 102); g.fillText('Made', 72, 1000); g.fillText('to last.', 72, 1110);
-        g.font = F(500, 24); g.fillText('Thoughtful design for everyday rituals.', 76, 1170);
-        g.fillStyle = '#777777'; g.beginPath(); g.arc(875, 1070, 55, 0, Math.PI * 2); g.fill();
-        g.fillStyle = '#eeeeeb'; g.textAlign = 'center'; g.font = F(700, 19); g.fillText('F', 875, 1077); g.textAlign = 'left';
-      }
-      out.push({ id: ++uid, name: tr('Contoh {n}', { n: i + 1 }), src: c, thumb: thumbOf(c), sample: true });
-    }
-    return out;
+  async function makeSamples() {
+    const paths = Array.from({ length: 7 }, function (_, i) { return 'assets/cards/' + (i + 1) + '.webp'; });
+    return Promise.all(paths.map(function (path, i) {
+      return new Promise(function (resolve, reject) {
+        const img = new Image();
+        img.onload = function () {
+          const c = document.createElement('canvas');
+          c.width = img.naturalWidth; c.height = img.naturalHeight;
+          c.getContext('2d').drawImage(img, 0, 0);
+          resolve({ id: ++uid, name: tr('Contoh {n}', { n: i + 1 }), src: c, thumb: thumbOf(c), sample: true });
+        };
+        img.onerror = function () { reject(new Error(path)); };
+        img.src = path;
+      });
+    }));
   }
 
   function loadFile(file) {
@@ -1308,7 +1276,13 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
 
   $('#file').addEventListener('change', function (e) { addFiles(e.target.files); e.target.value = ''; });
   $('#clearBtn').addEventListener('click', function () { S.designs.forEach(disposeGL); S.designs = []; afterDesignsChange(); setStatus(''); });
-  $('#sampleBtn').addEventListener('click', function () { S.designs.forEach(disposeGL); S.designs = makeSamples(); afterDesignsChange(); setStatus(''); });
+  $('#sampleBtn').addEventListener('click', async function () {
+    setStatus(tr('Memuat gambar...'));
+    try {
+      const samples = await makeSamples();
+      S.designs.forEach(disposeGL); S.designs = samples; afterDesignsChange(); setStatus('');
+    } catch (e) { setStatus(tr('Gagal memuat contoh desain.')); }
+  });
 
   function dropTarget(el, cls) {
     el.addEventListener('dragover', function (e) { e.preventDefault(); el.classList.add(cls); });
@@ -1652,8 +1626,7 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
     setStatus('');
     if (!ready) return;
     if (S.designs.length && S.designs.every(function (d) { return d.sample; })) {
-      S.designs.forEach(disposeGL);
-      S.designs = makeSamples();
+      S.designs.forEach(function (d, i) { d.name = tr('Contoh {n}', { n: i + 1 }); });
     }
     renderList();
     if (!S.designs.length) emptyMsg.textContent = tr('Belum ada desain. Tambah gambar atau klik "Pakai contoh".');
@@ -1678,7 +1651,7 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
     try {
       await Promise.race([document.fonts.load('800 80px Archivo'), new Promise(function (r) { setTimeout(r, 1500); })]);
     } catch (e) { /* fonts optional */ }
-    S.designs = makeSamples();
+    S.designs = await makeSamples();
     renderList();
     ready = true;
     fit();
