@@ -251,7 +251,14 @@ button:focus-visible, input:focus-visible, .dz:focus-within { outline: 2px solid
 .seg.zoom button { min-width: 34px; }
 .seg.zoom #zoomVal { font-family: var(--mono); font-size: 12px; }
 .btn.block { width: 100%; }
+a.btn { text-decoration: none; }
 .dims { font: 400 12px var(--mono); color: var(--muted); }
+.preset { display: grid; gap: 6px; }
+.preset label { font-size: 13px; font-weight: 500; }
+.preset select { width: 100%; height: var(--h); padding: 0 34px 0 12px; border: 1px solid var(--line-strong); border-radius: var(--r); background: var(--panel) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center; color: var(--ink); font: 500 13px var(--font); cursor: pointer; -webkit-appearance: none; appearance: none; }
+.preset select:hover { border-color: var(--ink); }
+.preset select:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.preset .note { font-size: 12px; color: var(--muted); margin: 0; }
 .q { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; }
 .q[hidden] { display: none; }
 #status { margin: 0; min-height: 1.45em; font-size: 12.5px; }
@@ -344,6 +351,15 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
   font: 500 12px var(--mono); letter-spacing: .02em;
 }
 .seg.zoom #zoomVal:hover { background: var(--panel); color: var(--ink); }
+.side.right { padding-bottom: 36px; }
+.side-donate { display: grid; gap: 10px; padding-top: 18px; border-top: 1px solid var(--line); }
+.side-donate p { margin: 0; font-size: 12.5px; color: var(--muted); line-height: 1.45; }
+/* compact tools panel */
+.seg.v { flex-direction: row; gap: 3px; padding: 3px; border-radius: 12px; }
+.seg.v button { flex: 1; min-width: 0; flex-direction: column; justify-content: center; gap: 4px; min-height: 0; height: 50px; padding: 6px 2px; border-radius: 9px; font-size: 11.5px; }
+.seg.zoom button { min-width: 32px; height: 32px; border-radius: 9px; }
+.seg.zoom #zoomVal { padding: 0 10px; }
+.hint { font-size: 12px; line-height: 1.4; }
 .dz { min-height: 48px; border-radius: 13px; border-color: var(--line-strong); background: var(--field); }
 .dz:hover, .dz.drop { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 6%, var(--panel)); }
 #list { gap: 9px; }
@@ -353,7 +369,8 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
 @media (max-width: 900px) {
   body { padding: 10px; }
   .app { gap: 10px; }
-  .center { min-height: min(80vw, 560px); }
+  .center { position: sticky; top: 8px; z-index: 20; min-height: 0; padding: 8px; box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28); }
+  .stage { width: min(100%, calc(44vh * var(--ratio, 1))); }
   .side { padding: 18px; }
 }
 </style>
@@ -451,6 +468,22 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
         <button type="button" class="btn" id="sampleBtn">Pakai contoh</button>
         <button type="button" class="btn" id="clearBtn">Hapus semua</button>
       </div>
+      <div class="preset">
+        <label for="preset">Preset</label>
+        <select id="preset">
+          <option value="" selected disabled>Pilih preset...</option>
+          <option value="0">Bawaan</option>
+          <option value="1">Lurus rapi</option>
+          <option value="2">Diagonal 45°</option>
+          <option value="3">Perspektif 3D</option>
+          <option value="4">Feed Instagram</option>
+          <option value="5">Story vertikal</option>
+          <option value="6">Banner lebar</option>
+          <option value="7">Gelap dramatis</option>
+          <option value="8">Minimal bersih</option>
+          <option value="9">Kartu bulat</option>
+        </select>
+      </div>
     </section>
 
     <section>
@@ -547,6 +580,10 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
         </div>
       </div>
     </section>
+    <div class="side-donate" id="sideDonate">
+      <p>Suka dengan Flatlay Mockup? Gratis dipakai, dukungan Anda membantu pengembangannya.</p>
+      <a class="btn donate block" href="https://saweria.co/revaldyas" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C1 8.6 2.9 5 6.4 5c2 0 3.7 1.1 4.6 2.7h2C14 6.1 15.7 5 17.6 5c3.5 0 5.4 3.6 4 6.8C19.5 16.4 12 21 12 21z"/></svg><span>Dukung lewat Saweria</span></a>
+    </div>
   </aside>
 
   <div class="modal" id="about" hidden>
@@ -773,6 +810,18 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
   "Mulai membuat": "Start creating",
   "Contoh hasil": "Sample results",
   "Tentang dan panduan": "About and guide",
+  "Pilih preset...": "Choose a preset...",
+  "Bawaan": "Default",
+  "Lurus rapi": "Straight and tidy",
+  "Perspektif 3D": "3D perspective",
+  "Feed Instagram": "Instagram feed",
+  "Story vertikal": "Vertical story",
+  "Banner lebar": "Wide banner",
+  "Gelap dramatis": "Dramatic dark",
+  "Minimal bersih": "Clean minimal",
+  "Kartu bulat": "Rounded cards",
+  "Suka dengan Flatlay Mockup? Gratis dipakai, dukungan Anda membantu pengembangannya.": "Like Flatlay Mockup? It is free to use. Your support helps keep it going.",
+  "Dukung lewat Saweria": "Support via Saweria",
   "Donasi lewat Saweria": "Donate via Saweria",
   "Donasi": "Donate",
   "Traktir kopi": "Buy me a coffee"
@@ -824,7 +873,7 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
   (function () {
     const sec = $('#exportSec'), left = $('.side.left'), right = $('.side.right');
     const mq = window.matchMedia('(max-width: 900px)');
-    function place() { (mq.matches ? right : left).appendChild(sec); }
+    function place() { if (mq.matches) right.insertBefore(sec, $('#sideDonate')); else left.appendChild(sec); }
     place();
     if (mq.addEventListener) mq.addEventListener('change', place); else mq.addListener(place);
   })();
@@ -1523,6 +1572,38 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
   }
   $$('#sw button').forEach(function (b) { b.addEventListener('click', function () { setBg(b.dataset.c); }); });
   $('#bg').addEventListener('input', function (e) { setBg(e.target.value); });
+
+  /* ---------- presets ---------- */
+  const PRESET_BASE = { canvasRatio: '1:1', layout: 'uniform', flow: 'row', cardRatio: 'auto', repeat: true, cols: 0, mode: 'seq',
+    angle: 32, size: 40, gap: 4, tilt: 0, lens: 45, radius: 0, lightAngle: 135, shAmt: 38, shDist: 3, shSoft: 45, glow: 0, bg: '#a6a6a2' };
+  const PRESETS = [
+    {},
+    { angle: 0, size: 38, gap: 5, radius: 3, bg: '#e9e9e4', shAmt: 25 },
+    { angle: 45, size: 42, gap: 3 },
+    { angle: 28, tilt: 28, lens: 60, size: 38, gap: 4, radius: 4, shAmt: 50, shDist: 4 },
+    { canvasRatio: '4:5', angle: 0, size: 46, gap: 2, radius: 2, bg: '#ffffff', shAmt: 15, shDist: 2 },
+    { canvasRatio: '9:16', angle: -20, size: 44, gap: 4, radius: 5, bg: '#1b1b1b', shAmt: 60, shDist: 4 },
+    { canvasRatio: '16:9', angle: 18, tilt: 12, size: 34, gap: 4, radius: 3, bg: '#cfcfcb' },
+    { angle: 30, size: 40, gap: 4, radius: 4, bg: '#171717', shAmt: 70, shDist: 5, shSoft: 60, glow: 25 },
+    { angle: 0, size: 36, gap: 8, radius: 6, bg: '#ffffff', shAmt: 12, shDist: 2, shSoft: 70 },
+    { angle: 40, size: 40, gap: 5, radius: 18, bg: '#e9e9e4', shAmt: 40 }
+  ];
+  function applyPreset(i) {
+    const P = Object.assign({}, PRESET_BASE, PRESETS[i]);
+    Object.keys(P).forEach(function (k) { S[k] = P[k]; });
+    S.panX = 0; S.panY = 0; S.zoom = 1; zoomLabel();
+    ['canvasRatio', 'layout', 'flow', 'cardRatio', 'mode'].forEach(function (k) { markSeg($('.seg[data-key="' + k + '"]'), S[k]); });
+    markSeg($('.seg[data-key="repeat"]'), S.repeat ? '1' : '0');
+    ['cols', 'angle', 'size', 'gap', 'tilt', 'lens', 'radius', 'lightAngle', 'shAmt', 'shDist', 'shSoft', 'glow'].forEach(function (k) { syncCtl(k, S[k]); });
+    frame.style.setProperty('--ratio', RATIOS[S.canvasRatio]);
+    shadowMat.opacity = S.shAmt / 100;
+    updateLayoutUI();
+    makeShadow();
+    setBg(S.bg);
+    dims();
+    schedule();
+  }
+  $('#preset').addEventListener('change', function (e) { applyPreset(+e.target.value); });
 
   /* ---------- canvas gestures: pan, zoom, rotate, light ---------- */
   function zoomLabel() { $('#zoomVal').textContent = Math.round(S.zoom * 100) + '%'; }
