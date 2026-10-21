@@ -739,6 +739,38 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
   const statusEl = $('#status');
   const setStatus = (m) => { statusEl.textContent = m || ''; };
 
+  /* Keep the help dialog usable even when WebGL or its CDN dependency is unavailable. */
+  (function () {
+    const box = $('#about'), openBtn = $('#aboutBtn');
+    let lastFocus = null;
+    function open() {
+      lastFocus = document.activeElement;
+      box.hidden = false;
+      const body = box.querySelector('.modal-body');
+      if (body) body.scrollTop = 0;
+      $('#aboutClose').focus();
+    }
+    function close() {
+      if (box.hidden) return;
+      box.hidden = true;
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+    openBtn.addEventListener('click', open);
+    $('#aboutClose').addEventListener('click', close);
+    $('#aboutOk').addEventListener('click', close);
+    box.addEventListener('mousedown', function (e) { if (e.target === box) close(); });
+    document.addEventListener('keydown', function (e) {
+      if (box.hidden) return;
+      if (e.key === 'Escape') { e.preventDefault(); close(); return; }
+      if (e.key !== 'Tab') return;
+      const f = Array.prototype.filter.call(box.querySelectorAll('button, a[href]'), function (el) { return !el.disabled; });
+      if (!f.length) return;
+      const first = f[0], end = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); end.focus(); }
+      else if (!e.shiftKey && document.activeElement === end) { e.preventDefault(); first.focus(); }
+    });
+  })();
+
   if (!window.THREE) { setStatus(tr('Three.js gagal dimuat. Periksa koneksi internet lalu muat ulang halaman.')); return; }
 
   const RATIOS = { '1:1': 1, '4:5': 4 / 5, '9:16': 9 / 16, '16:9': 16 / 9 };
@@ -1511,38 +1543,6 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
     syncCtl('shDist', S.shDist);
     schedule();
   });
-
-  /* about modal */
-  (function () {
-    const box = $('#about'), openBtn = $('#aboutBtn');
-    let lastFocus = null;
-    function open() {
-      lastFocus = document.activeElement;
-      box.hidden = false;
-      const body = box.querySelector('.modal-body');
-      if (body) body.scrollTop = 0;
-      $('#aboutClose').focus();
-    }
-    function close() {
-      if (box.hidden) return;
-      box.hidden = true;
-      if (lastFocus && lastFocus.focus) lastFocus.focus();
-    }
-    openBtn.addEventListener('click', open);
-    $('#aboutClose').addEventListener('click', close);
-    $('#aboutOk').addEventListener('click', close);
-    box.addEventListener('mousedown', function (e) { if (e.target === box) close(); });
-    document.addEventListener('keydown', function (e) {
-      if (box.hidden) return;
-      if (e.key === 'Escape') { e.preventDefault(); close(); return; }
-      if (e.key !== 'Tab') return;
-      const f = Array.prototype.filter.call(box.querySelectorAll('button, a[href]'), function (el) { return !el.disabled; });
-      if (!f.length) return;
-      const first = f[0], end = f[f.length - 1];
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); end.focus(); }
-      else if (!e.shiftKey && document.activeElement === end) { e.preventDefault(); first.focus(); }
-    });
-  })();
 
   /* ---------- export ---------- */
   async function getDownloads() {
