@@ -94,8 +94,9 @@ h1 { margin: 0; font: 700 18px var(--display); letter-spacing: -0.01em; }
 .by { font: 500 12px var(--font); color: var(--muted); text-decoration: none; width: fit-content; transition: color 0.15s; }
 .by:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
 .by:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
-.brand-actions { display: flex; gap: 8px; margin-top: 8px; }
-.brand-actions .lang { flex: 1; margin-top: 0; }
+.brand-actions { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+.brand .brand-actions .lang { flex: 1; margin-top: 0; box-sizing: border-box; height: var(--h); }
+.brand-actions .lang button { flex: 1; }
 .icon-btn { flex: none; width: var(--h); height: var(--h); display: inline-grid; place-items: center; border: 0; border-radius: var(--r); background: transparent; color: var(--muted); cursor: pointer; transition: background-color 0.15s, color 0.15s, border-color 0.15s; }
 .icon-btn:hover { background: var(--field); color: var(--ink); }
 .icon-btn.bordered { border: 1px solid var(--line-strong); background: var(--panel); color: var(--ink); }
@@ -203,6 +204,11 @@ canvas#gl:focus-visible { outline: 2px solid var(--focus); outline-offset: -4px;
 .empty[hidden] { display: none; }
 .empty p { margin: 0; padding: 10px 14px; background: var(--panel); color: var(--ink); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--lift); text-align: center; }
 
+.donate-pop { position: absolute; left: 12px; top: 12px; display: inline-flex; align-items: center; gap: 7px; padding: 7px 13px 7px 10px; border-radius: 99px; background: rgba(20, 20, 20, 0.72); color: #fff; font: 500 12px var(--font); text-decoration: none; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); opacity: 0; transform: translateY(-8px); pointer-events: none; transition: opacity 0.35s ease, transform 0.35s ease; }
+.donate-pop.show { opacity: 1; transform: none; pointer-events: auto; }
+.donate-pop svg { color: #ff5c8a; }
+.donate-pop[hidden] { display: none; }
+@media (prefers-reduced-motion: reduce) { .donate-pop { transition: opacity 0.2s; transform: none; } }
 .drag-hint { position: absolute; left: 12px; bottom: 12px; display: inline-flex; align-items: center; gap: 7px; padding: 6px 11px 6px 9px; border-radius: 99px; background: rgba(20, 20, 20, 0.55); color: #fff; font: 500 12px var(--font); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); pointer-events: none; user-select: none; }
 .rays { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; display: block; }
 .rays line { stroke: var(--sun); stroke-width: 1.5; stroke-dasharray: 5 5; vector-effect: non-scaling-stroke; }
@@ -230,6 +236,9 @@ canvas#gl:focus-visible { outline: 2px solid var(--focus); outline-offset: -4px;
   font: 500 13px var(--font); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;
   transition: background-color 0.15s, border-color 0.15s, opacity 0.15s;
 }
+.donate-icon { color: #e0245e; }
+.btn.donate svg { color: #e0245e; }
+.foot-actions { display: flex; gap: 8px; }
 .btn:active { transform: translateY(1px); }
 .btn:hover { background: var(--field); border-color: var(--ink); }
 .btn.solid { background: var(--accent); border-color: var(--accent); color: var(--on-accent); font-weight: 600; box-shadow: 0 1px 2px rgba(15, 19, 24, 0.2); }
@@ -244,6 +253,7 @@ button:focus-visible, input:focus-visible, .dz:focus-within { outline: 2px solid
 .btn.block { width: 100%; }
 .dims { font: 400 12px var(--mono); color: var(--muted); }
 .q { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; }
+.q[hidden] { display: none; }
 #status { margin: 0; min-height: 1.45em; font-size: 12.5px; }
 .hint { margin: 0; font-size: 12.5px; color: var(--muted); }
 
@@ -368,6 +378,7 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
           <button type="button" role="radio" aria-checked="true" data-v="id">ID</button>
           <button type="button" role="radio" aria-checked="false" data-v="en">EN</button>
         </div>
+        <a class="icon-btn bordered donate-icon" href="https://saweria.co/revaldyas" target="_blank" rel="noopener noreferrer" aria-label="Donasi lewat Saweria" title="Donasi lewat Saweria"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C1 8.6 2.9 5 6.4 5c2 0 3.7 1.1 4.6 2.7h2C14 6.1 15.7 5 17.6 5c3.5 0 5.4 3.6 4 6.8C19.5 16.4 12 21 12 21z"/></svg></a>
         <button type="button" class="icon-btn bordered" id="aboutBtn" aria-label="Tentang dan panduan" title="Tentang dan panduan" aria-haspopup="dialog"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 1 1 3.4 2.3c-.7.3-1 .8-1 1.6M12 17h.01"/></svg></button>
       </div>
     </section>
@@ -393,7 +404,7 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
       <p class="hint" id="hint"></p>
     </section>
 
-    <section>
+    <section id="exportSec">
       <h2>Ekspor</h2>
       <span class="dims" id="dims">2048 × 2048 px</span>
       <div class="seg" role="radiogroup" aria-label="Format file" data-key="fmt">
@@ -417,6 +428,7 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
   <main class="center" id="frame">
     <div class="stage" id="stage">
       <canvas id="gl" tabindex="0" data-tool="pan" aria-label="Pratinjau mockup. Seret untuk menggeser, scroll untuk zoom, tombol panah untuk menggeser dengan keyboard."></canvas>
+      <a class="donate-pop" id="donatePop" hidden href="https://saweria.co/revaldyas" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C1 8.6 2.9 5 6.4 5c2 0 3.7 1.1 4.6 2.7h2C14 6.1 15.7 5 17.6 5c3.5 0 5.4 3.6 4 6.8C19.5 16.4 12 21 12 21z"/></svg><span>Traktir kopi</span></a>
       <div class="drag-hint" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 12h18M12 3l-3 3M12 3l3 3M12 21l-3-3M12 21l3-3M3 12l3-3M3 12l3 3M21 12l-3-3M21 12l-3 3"/></svg><span>Seret untuk menggeser</span></div>
       <svg class="rays" id="rays" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" hidden><line id="sunLine" x1="50" y1="50" x2="30" y2="30"></line></svg>
       <button type="button" class="sun" id="sun" aria-label="Posisi cahaya. Gunakan tombol panah untuk memindahkan." hidden>
@@ -592,7 +604,10 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
       </div>
       <footer class="modal-foot">
         <a class="by" href="https://github.com/revaldyas" target="_blank" rel="noopener noreferrer">by @revaldyas</a>
-        <button type="button" class="btn solid" id="aboutOk">Mengerti</button>
+        <span class="foot-actions">
+          <a class="btn donate" href="https://saweria.co/revaldyas" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C1 8.6 2.9 5 6.4 5c2 0 3.7 1.1 4.6 2.7h2C14 6.1 15.7 5 17.6 5c3.5 0 5.4 3.6 4 6.8C19.5 16.4 12 21 12 21z"/></svg><span>Donasi</span></a>
+          <button type="button" class="btn solid" id="aboutOk">Mengerti</button>
+        </span>
       </footer>
     </div>
   </div>
@@ -757,7 +772,10 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
   "Seret untuk menggeser": "Drag to pan",
   "Mulai membuat": "Start creating",
   "Contoh hasil": "Sample results",
-  "Tentang dan panduan": "About and guide"
+  "Tentang dan panduan": "About and guide",
+  "Donasi lewat Saweria": "Donate via Saweria",
+  "Donasi": "Donate",
+  "Traktir kopi": "Buy me a coffee"
 };
   let LANG = '';
   try { LANG = localStorage.getItem('flatlay-lang') || ''; } catch (e) { LANG = ''; }
@@ -801,6 +819,30 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
 
   const statusEl = $('#status');
   const setStatus = (m) => { statusEl.textContent = m || ''; };
+
+  /* Mobile (stacked layout): export settings go to the bottom of the right panel. */
+  (function () {
+    const sec = $('#exportSec'), left = $('.side.left'), right = $('.side.right');
+    const mq = window.matchMedia('(max-width: 900px)');
+    function place() { (mq.matches ? right : left).appendChild(sec); }
+    place();
+    if (mq.addEventListener) mq.addEventListener('change', place); else mq.addListener(place);
+  })();
+
+  /* Small donate nudge: shows once for 5 seconds while the visitor is editing. */
+  (function () {
+    const pop = $('#donatePop'), about = $('#about');
+    function show() {
+      if (!about.hidden) { setTimeout(show, 8000); return; }
+      pop.hidden = false;
+      requestAnimationFrame(function () { requestAnimationFrame(function () { pop.classList.add('show'); }); });
+      setTimeout(function () {
+        pop.classList.remove('show');
+        setTimeout(function () { pop.hidden = true; }, 400);
+      }, 5000);
+    }
+    setTimeout(show, 30000);
+  })();
 
   /* Keep the help dialog usable even when WebGL or its CDN dependency is unavailable. */
   (function () {

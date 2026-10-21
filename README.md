@@ -5,7 +5,9 @@
 **Turn a pile of card designs into one tilted flat-lay photo.**<br>
 Upload, arrange, light it, save as PNG or WebP. Everything runs in your browser.
 
-[**Live demo**](https://flatlay.revaldys.biz.id) · [Features](#features) · [How to use](#how-to-use) · [Run locally](#run-locally) · [Bahasa Indonesia](#bahasa-indonesia)
+[**Live demo**](https://flatlay.revaldys.biz.id) · [Features](#features) · [How to use](#how-to-use) · [Run locally](#run-locally) · [Bahasa Indonesia](#bahasa-indonesia) · [Donate](https://saweria.co/revaldyas)
+
+<a href="https://saweria.co/revaldyas"><img src="https://img.shields.io/badge/Donate-Saweria-F96854?style=for-the-badge" alt="Donate via Saweria"></a>
 
 <br>
 
