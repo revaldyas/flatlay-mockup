@@ -4,46 +4,49 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: tools | canvas workspace | settings. Cool slate neutrals, ink as the one action colour,
-   hairline borders so every container reads as its own surface. */
+/* Layout: tools | canvas workspace | settings. Minimal black and white studio. */
 :root {
-  --bg: #e8eaed;
+  --bg: #f2f2f0;
   --panel: #ffffff;
-  --work: #dfe2e6;
-  --dot: rgba(15, 19, 24, 0.14);
-  --field: #eff1f3;
-  --ink: #0f1318;
-  --muted: #667080;
-  --line: #dde1e6;
-  --line-strong: #c2c8d0;
-  --accent: #0f1318;
+  --work: #e8e8e6;
+  --dot: rgba(20, 20, 20, 0.12);
+  --field: #f4f4f2;
+  --ink: #171717;
+  --muted: #777777;
+  --line: #e5e5e3;
+  --line-strong: #c7c7c4;
+  --accent: #171717;
   --on-accent: #ffffff;
-  --focus: #3d63f2;
-  --sun: #f0a020;
-  --r: 10px;
-  --h: 36px;
+  --choice: #171717;
+  --choice-text: #ffffff;
+  --focus: #555555;
+  --sun: #d8d8d4;
+  --r: 12px;
+  --h: 40px;
   --font: "Instrument Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --display: "Archivo", "Instrument Sans", system-ui, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
-  --card: 0 1px 2px rgba(15, 19, 24, 0.04);
-  --lift: 0 1px 2px rgba(15, 19, 24, 0.08), 0 12px 32px rgba(15, 19, 24, 0.14);
+  --card: 0 2px 8px rgba(0, 0, 0, 0.035), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --lift: 0 3px 8px rgba(0, 0, 0, 0.08), 0 24px 60px rgba(0, 0, 0, 0.16);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #090b0d; --panel: #14171b; --work: #0e1114; --dot: rgba(255, 255, 255, 0.08); --field: #1c2025;
-    --ink: #eceff2; --muted: #8a94a1; --line: #242930; --line-strong: #39414b;
-    --accent: #eceff2; --on-accent: #0b0d10; --focus: #8097ff; --sun: #f5b544;
-    --card: 0 1px 2px rgba(0, 0, 0, 0.4);
-    --lift: 0 1px 2px rgba(0, 0, 0, 0.5), 0 12px 32px rgba(0, 0, 0, 0.5);
+    --bg: #151515; --panel: #202020; --work: #111111; --dot: rgba(255, 255, 255, 0.07); --field: #292929;
+    --ink: #f1f1ef; --muted: #a0a0a0; --line: #343434; --line-strong: #505050;
+    --accent: #f1f1ef; --on-accent: #171717; --focus: #bcbcbc; --sun: #d8d8d4;
+    --choice: #3b3b3b; --choice-text: #f1f1ef;
+    --card: 0 2px 8px rgba(0, 0, 0, 0.18);
+    --lift: 0 3px 8px rgba(0, 0, 0, 0.24), 0 24px 60px rgba(0, 0, 0, 0.4);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #090b0d; --panel: #14171b; --work: #0e1114; --dot: rgba(255, 255, 255, 0.08); --field: #1c2025;
-  --ink: #eceff2; --muted: #8a94a1; --line: #242930; --line-strong: #39414b;
-  --accent: #eceff2; --on-accent: #0b0d10; --focus: #8097ff; --sun: #f5b544;
-  --card: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --lift: 0 1px 2px rgba(0, 0, 0, 0.5), 0 12px 32px rgba(0, 0, 0, 0.5);
+  --bg: #151515; --panel: #202020; --work: #111111; --dot: rgba(255, 255, 255, 0.07); --field: #292929;
+  --ink: #f1f1ef; --muted: #a0a0a0; --line: #343434; --line-strong: #505050;
+  --accent: #f1f1ef; --on-accent: #171717; --focus: #bcbcbc; --sun: #d8d8d4;
+  --choice: #3b3b3b; --choice-text: #f1f1ef;
+  --card: 0 2px 8px rgba(0, 0, 0, 0.18);
+  --lift: 0 3px 8px rgba(0, 0, 0, 0.24), 0 24px 60px rgba(0, 0, 0, 0.4);
   color-scheme: dark;
 }
 
@@ -145,7 +148,7 @@ kbd { flex: none; min-width: 34px; padding: 4px 8px; text-align: center; font: 5
   position: relative; aspect-ratio: var(--ratio, 1);
   width: min(100%, calc(80vh * var(--ratio, 1)));
   width: min(100cqw, calc(100cqh * var(--ratio, 1)));
-  border-radius: 12px; background: #aba698; overflow: hidden; box-shadow: var(--lift);
+  border-radius: 12px; background: #a6a6a2; overflow: hidden; box-shadow: var(--lift);
 }
 .stage.drop { outline: 3px solid var(--focus); outline-offset: -3px; }
 canvas#gl { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
@@ -243,6 +246,59 @@ input[type=range]::-moz-range-thumb { box-sizing: border-box; width: 16px; heigh
 .sw input[type=color]::-moz-color-swatch { border: 0; border-radius: var(--r); }
 
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
+
+/* minimal monochrome studio */
+body { background: var(--bg); }
+.app { gap: 14px; }
+.side { padding: 20px; border-color: color-mix(in srgb, var(--line) 82%, transparent); border-radius: 18px; }
+.side section { gap: 15px; padding: 20px 0; }
+.side section:first-child { padding-top: 0; }
+h1 { font-size: 21px; letter-spacing: -0.035em; }
+h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
+.logo { border-radius: 13px; background: var(--accent); color: var(--on-accent); }
+.by { font-size: 11px; }
+.tagline { max-width: 28ch; line-height: 1.55; }
+.center { border: 1px solid color-mix(in srgb, var(--line-strong) 44%, transparent); border-radius: 20px; }
+.stage { border-radius: 16px; }
+.btn { border-radius: 11px; transition: transform .16s ease, background-color .16s ease, border-color .16s ease, box-shadow .16s ease; }
+.btn:hover { border-color: var(--accent); box-shadow: 0 4px 12px rgba(0, 0, 0, .08); transform: translateY(-1px); }
+.btn.solid { background: var(--accent); border-color: var(--accent); box-shadow: 0 5px 12px rgba(0, 0, 0, .13); }
+.seg { border-radius: 12px; }
+.seg button { border-radius: 9px; }
+.seg button[aria-checked="true"] { box-shadow: 0 2px 5px rgba(0, 0, 0, .12); }
+.seg.v { gap: 4px; padding: 5px; border-radius: 14px; }
+.seg.v button {
+  height: 42px; padding: 0 14px; gap: 12px; border-radius: 9px;
+  color: var(--muted); transition: background-color .15s ease, color .15s ease;
+}
+.seg.v button:not([aria-checked="true"]):hover { background: color-mix(in srgb, var(--ink) 6%, var(--field)); color: var(--ink); }
+.seg.v button[aria-checked="true"] {
+  color: var(--choice-text); background: var(--choice); box-shadow: none; font-weight: 600;
+}
+.seg.v button[aria-checked="true"] svg { opacity: .9; }
+.seg.zoom { gap: 6px; padding: 0; border: 0; background: transparent; }
+.seg.zoom button {
+  min-width: 44px; height: 44px; padding: 0; border: 1px solid var(--line); border-radius: 11px;
+  background: var(--panel); color: var(--ink); transition: background-color .15s ease, border-color .15s ease;
+}
+.seg.zoom button:hover { background: var(--field); border-color: var(--line-strong); }
+.seg.zoom #zoomVal {
+  flex: 1; padding: 0 14px; border-color: var(--line); background: var(--field); color: var(--muted);
+  font: 500 12px var(--mono); letter-spacing: .02em;
+}
+.seg.zoom #zoomVal:hover { background: var(--panel); color: var(--ink); }
+.dz { min-height: 48px; border-radius: 13px; border-color: var(--line-strong); background: var(--field); }
+.dz:hover, .dz.drop { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 6%, var(--panel)); }
+#list { gap: 9px; }
+#list li { border-radius: 11px; box-shadow: var(--card); }
+#list .tag { padding: 2px 6px; border-radius: 5px; }
+.sw button, .sw input[type=color] { border-radius: 10px; }
+@media (max-width: 900px) {
+  body { padding: 10px; }
+  .app { gap: 10px; }
+  .center { min-height: min(80vw, 560px); }
+  .side { padding: 18px; }
+}
 </style>
 
 <div class="app">
@@ -419,13 +475,13 @@ input[type=range]::-moz-range-thumb { box-sizing: border-box; width: 16px; heigh
       <div class="ctl">
         <span class="lbl" id="l-bg">Warna latar</span>
         <div class="sw" id="sw" role="group" aria-labelledby="l-bg">
-          <button type="button" data-c="#aba698" aria-label="Abu hangat" title="Abu hangat" style="background:#aba698"></button>
-          <button type="button" data-c="#e7e5df" aria-label="Putih tulang" title="Putih tulang" style="background:#e7e5df"></button>
+          <button type="button" data-c="#a6a6a2" aria-label="Abu-abu" title="Abu-abu" style="background:#a6a6a2"></button>
+          <button type="button" data-c="#e7e7e4" aria-label="Abu muda" title="Abu muda" style="background:#e7e7e4"></button>
           <button type="button" data-c="#ffffff" aria-label="Putih" title="Putih" style="background:#ffffff"></button>
-          <button type="button" data-c="#b9c2b3" aria-label="Hijau pucat" title="Hijau pucat" style="background:#b9c2b3"></button>
-          <button type="button" data-c="#d6c7b0" aria-label="Pasir" title="Pasir" style="background:#d6c7b0"></button>
-          <button type="button" data-c="#2a2e2c" aria-label="Arang" title="Arang" style="background:#2a2e2c"></button>
-          <input type="color" id="bg" value="#aba698" aria-label="Pilih warna lain">
+          <button type="button" data-c="#c7c7c3" aria-label="Perak" title="Perak" style="background:#c7c7c3"></button>
+          <button type="button" data-c="#777777" aria-label="Abu gelap" title="Abu gelap" style="background:#777777"></button>
+          <button type="button" data-c="#222222" aria-label="Hitam" title="Hitam" style="background:#222222"></button>
+          <input type="color" id="bg" value="#a6a6a2" aria-label="Pilih warna lain">
         </div>
       </div>
     </section>
@@ -689,7 +745,7 @@ input[type=range]::-moz-range-thumb { box-sizing: border-box; width: 16px; heigh
   const CARD_RATIOS = { '1:1': 1, '4:5': 4 / 5, '3:4': 3 / 4 };
   const S = {
     designs: [], canvasRatio: '1:1', cardRatio: 'auto', angle: 32, size: 40, gap: 4, tilt: 0,
-    mode: 'seq', seed: 1, bg: '#aba698', shAmt: 38, shDist: 3, shSoft: 45, glow: 0, lightAngle: 135,
+    mode: 'seq', seed: 1, bg: '#a6a6a2', shAmt: 38, shDist: 3, shSoft: 45, glow: 0, lightAngle: 135,
     exportW: 2048, repeat: true, cols: 0, fmt: 'png', quality: 85, panX: 0, panY: 0, zoom: 1, tool: 'pan', lens: 45, radius: 0, layout: 'uniform', flow: 'row'
   };
   const WF = 10, FOV = 30, T = 0.018, D2R = Math.PI / 180, MAXD = 24;
@@ -1140,24 +1196,40 @@ input[type=range]::-moz-range-thumb { box-sizing: border-box; width: 16px; heigh
       const g = c.getContext('2d');
       g.textBaseline = 'alphabetic';
       if (i === 0) {
-        g.fillStyle = '#1e3a2f'; g.fillRect(0, 0, W, H);
-        g.fillStyle = '#d4cdbd'; g.beginPath(); g.arc(780, 330, 330, 0, Math.PI * 2); g.fill();
-        g.fillStyle = '#e8590c'; g.fillRect(70, 820, 130, 14);
-        g.fillStyle = '#d4cdbd'; g.font = F(700, 38); g.fillText(tr('NAMA MEREK'), 70, 110);
-        g.font = F(800, 112); g.fillText(tr('Judul poster'), 70, 960); g.fillText(tr('di sini.'), 70, 1075);
+        g.fillStyle = '#202020'; g.fillRect(0, 0, W, H);
+        g.fillStyle = '#eeeeeb'; g.beginPath(); g.arc(785, 365, 310, 0, Math.PI * 2); g.fill();
+        [[725, 425, -1], [820, 490, 1], [770, 300, 1], [895, 335, -1]].forEach(function (p) {
+          g.save(); g.translate(p[0], p[1]); g.rotate(p[2] * -.55);
+          g.beginPath(); g.moveTo(0, 125); g.bezierCurveTo(-65, 65, -45, 5, 0, 0); g.bezierCurveTo(45, 45, 42, 88, 0, 125); g.fillStyle = '#a3a39e'; g.fill();
+          g.restore();
+        });
+        g.fillStyle = '#eeeeeb'; g.font = F(600, 31); g.fillText('SERA BOTANICALS', 72, 100);
+        g.fillStyle = '#a3a39e'; g.fillRect(74, 830, 82, 7);
+        g.fillStyle = '#eeeeeb'; g.font = F(700, 100); g.fillText('Grow', 70, 970); g.fillText('slowly.', 70, 1080);
+        g.font = F(500, 24); g.fillStyle = '#bcbcb8'; g.fillText('A little room to breathe.', 74, 1150);
       } else if (i === 1) {
-        g.fillStyle = '#e8590c'; g.fillRect(0, 0, W, H);
-        g.fillStyle = '#1b1c1a'; g.fillRect(190, 260, 620, 620);
-        g.fillStyle = '#e8590c'; g.fillRect(290, 360, 420, 420);
-        g.fillStyle = '#1b1c1a'; g.fillRect(390, 460, 220, 220);
-        g.font = F(700, 38); g.fillText(tr('CONTOH 02'), 190, 1010);
-        g.fillStyle = '#1b1c1a'; g.fillText(tr('Merek kamu, kartumu.'), 190, 1070);
+        g.fillStyle = '#eeeeeb'; g.fillRect(0, 0, W, H);
+        g.fillStyle = '#222222'; g.beginPath(); g.arc(500, 480, 300, 0, Math.PI * 2); g.fill();
+        g.fillStyle = '#bcbcb8'; g.beginPath(); g.arc(500, 480, 220, 0, Math.PI * 2); g.fill();
+        g.fillStyle = '#777777'; g.beginPath(); g.arc(500, 480, 175, 0, Math.PI * 2); g.fill();
+        g.strokeStyle = '#eeeeeb'; g.lineWidth = 18; g.beginPath(); g.arc(500, 480, 120, 0, Math.PI * 2); g.stroke();
+        g.fillStyle = '#222222'; g.beginPath(); g.roundRect(210, 780, 580, 145, 72); g.fill();
+        g.beginPath(); g.arc(790, 850, 80, -Math.PI / 2, Math.PI / 2); g.strokeStyle = '#222222'; g.lineWidth = 34; g.stroke();
+        g.fillStyle = '#222222'; g.textAlign = 'center'; g.font = F(700, 28); g.fillText('GOOD THINGS TAKE TIME', 500, 90);
+        g.font = F(700, 68); g.fillText('MORROW', 500, 870);
+        g.font = F(500, 23); g.fillStyle = '#222222'; g.fillText('COFFEE  ·  SMALL BATCH ROASTERS', 500, 1035);
+        g.font = F(500, 20); g.fillText('BANDUNG  /  EST. 2024', 500, 1165); g.textAlign = 'left';
       } else {
-        g.fillStyle = '#d4cdbd'; g.fillRect(0, 0, W, H);
-        g.strokeStyle = '#1e3a2f'; g.lineWidth = 150; g.lineJoin = 'miter'; g.miterLimit = 10;
-        g.beginPath(); g.moveTo(-40, 160); g.lineTo(260, 760); g.lineTo(500, 260); g.lineTo(740, 760); g.lineTo(1040, 160); g.stroke();
-        g.fillStyle = '#e8590c'; g.font = F(800, 120); g.fillText(tr('Slogan'), 70, 1000); g.fillText(tr('singkat.'), 70, 1120);
-        g.fillStyle = '#1e3a2f'; g.font = F(700, 38); g.fillText(tr('CONTOH 03'), 70, 100);
+        g.fillStyle = '#eeeeeb'; g.fillRect(0, 0, W, H);
+        g.fillStyle = '#222222'; g.font = F(700, 30); g.fillText('FORME  /  OBJECTS FOR LIVING', 72, 94);
+        g.strokeStyle = '#222222'; g.lineWidth = 5; g.beginPath(); g.moveTo(72, 125); g.lineTo(928, 125); g.stroke();
+        g.fillStyle = '#777777'; g.beginPath(); g.roundRect(185, 220, 630, 600, 300); g.fill();
+        g.fillStyle = '#eeeeeb'; g.beginPath(); g.arc(500, 535, 190, Math.PI, 0); g.lineTo(690, 730); g.lineTo(310, 730); g.closePath(); g.fill();
+        g.fillStyle = '#bcbcb8'; g.beginPath(); g.arc(500, 550, 120, Math.PI, 0); g.lineTo(620, 680); g.lineTo(380, 680); g.closePath(); g.fill();
+        g.fillStyle = '#222222'; g.font = F(700, 102); g.fillText('Made', 72, 1000); g.fillText('to last.', 72, 1110);
+        g.font = F(500, 24); g.fillText('Thoughtful design for everyday rituals.', 76, 1170);
+        g.fillStyle = '#777777'; g.beginPath(); g.arc(875, 1070, 55, 0, Math.PI * 2); g.fill();
+        g.fillStyle = '#eeeeeb'; g.textAlign = 'center'; g.font = F(700, 19); g.fillText('F', 875, 1077); g.textAlign = 'left';
       }
       out.push({ id: ++uid, name: tr('Contoh {n}', { n: i + 1 }), src: c, thumb: thumbOf(c), sample: true });
     }
