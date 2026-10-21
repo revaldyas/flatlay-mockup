@@ -76,7 +76,7 @@ Upload, arrange, light it, save as PNG or WebP. Everything runs in your browser.
   </tr>
 </table>
 
-### Keyboard
+### Keyboard and mouse
 
 Click the canvas first, then:
 
@@ -85,6 +85,9 @@ Click the canvas first, then:
 | Arrow keys | Pan the canvas |
 | `+` / `-` | Zoom in / out |
 | `[` / `]` | Turn the grid angle |
+| Middle mouse + drag | Orbit: turn the grid and tilt the camera |
+| Shift + middle mouse + drag | Pan |
+| Ctrl + middle mouse + drag | Zoom |
 
 ## Run locally
 
