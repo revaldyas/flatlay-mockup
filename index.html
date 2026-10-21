@@ -382,7 +382,7 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
 .dm-frame { position: relative; overflow: hidden; height: 150px; aspect-ratio: var(--dr, 1); background: var(--dbg, #a6a6a2); border-radius: 8px; box-shadow: 0 6px 18px rgba(0, 0, 0, .3); transition: background-color .35s, height .35s, aspect-ratio .35s; }
 .dm-persp { position: absolute; inset: 0; perspective: var(--persp, 900px); }
 .dm-tilt { position: absolute; inset: 0; display: grid; grid-template: 100% / 100%; place-items: center; transform-style: preserve-3d; transform: rotateX(var(--tilt, 0deg)); }
-.dm-grid { display: grid; grid-template-columns: repeat(var(--c, 9), var(--cw, 34px)); gap: var(--g, 5px); align-items: center; transform: rotate(var(--ang, 25deg)); flex: none; }
+.dm-grid { display: grid; grid-template-columns: repeat(var(--c, 9), var(--cw, 34px)); gap: var(--g, 5px); align-items: center; transform: rotate(var(--ang, 25deg)); translate: var(--tx, 0px) var(--ty, 0px); scale: var(--sc, 1); flex: none; }
 .dm-c { position: relative; overflow: hidden; aspect-ratio: var(--cr, 4 / 5); background: #fff; border-radius: var(--rad, 3px); box-shadow: var(--sx, 2px) var(--sy, 3px) var(--sb, 6px) rgba(0, 0, 0, var(--sa, .35)); transition: opacity .35s, transform .35s; }
 .dm-c::before { content: ''; position: absolute; left: 14%; top: 16%; width: 52%; height: 13%; border-radius: 2px; background: #f6d84b; }
 .dm-c::after { content: ''; position: absolute; left: 14%; top: 42%; width: 68%; height: 5%; border-radius: 2px; background: #222; opacity: .75; box-shadow: 0 7px 0 -0.5px rgba(34, 34, 34, .75), 0 14px 0 -0.5px rgba(34, 34, 34, .45); }
@@ -422,6 +422,51 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
 .sw .pick input[type=color] { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; border-radius: 99px; box-shadow: none; }
 .pick-ring { flex: none; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: conic-gradient(#ff4d4d, #ffb84d, #f6e84d, #4dd96a, #4dc3ff, #6a5cff, #d94dff, #ff4d4d); }
 .pick-ring i { width: 12px; height: 12px; border-radius: 50%; background: var(--cur, #a6a6a2); border: 2px solid var(--panel); box-sizing: content-box; }
+/* animation panel */
+.preset select, .ctl select { width: 100%; height: var(--h); padding: 0 34px 0 12px; border: 1px solid var(--line-strong); border-radius: var(--r); background: var(--panel) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center; color: var(--ink); font: 500 13px var(--font); cursor: pointer; -webkit-appearance: none; appearance: none; }
+.ctl select { grid-column: 1 / -1; }
+.ctl select:hover { border-color: var(--ink); }
+.ctl select:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.aprog { height: 4px; border-radius: 2px; background: var(--line-strong); overflow: hidden; }
+.aprog i { display: block; height: 100%; width: 0; background: var(--ink); }
+.rec-badge { position: absolute; right: 12px; top: 12px; display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px 6px 10px; border-radius: 99px; background: rgba(20, 20, 20, .72); color: #fff; font: 600 12px var(--mono); pointer-events: none; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.rec-badge[hidden] { display: none; }
+.rec-badge i { width: 9px; height: 9px; border-radius: 50%; background: #ff3b3b; animation: recblink 1s infinite; }
+@keyframes recblink { 50% { opacity: .25; } }
+body.anim-run .side section:not(#animSec), body.anim-run .side .brand, body.anim-run .side-donate { pointer-events: none; opacity: .5; }
+body.anim-run #gl { pointer-events: none; }
+body.anim-run .view-hints { display: none; }
+@media (prefers-reduced-motion: reduce) { .rec-badge i { animation: none; } }
+/* About: animation feature */
+.rec-feature { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 28px; align-items: center; padding: 26px; border-radius: 16px; border: 1px solid var(--line); background: linear-gradient(135deg, var(--field), var(--panel)); overflow: hidden; }
+.rec-feature h3 { margin: 0 0 10px; font: 800 clamp(22px, 3vw, 30px)/1.08 var(--display); letter-spacing: -0.02em; }
+.rec-feature p { margin: 0 0 16px; font-size: 14px; line-height: 1.55; color: var(--muted); max-width: 46ch; }
+.rec-new { margin-bottom: 12px; color: #e0245e; opacity: 1; }
+.rec-chips, .rec-facts { list-style: none; margin: 0; padding: 0; }
+.rec-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.rec-chips li { padding: 5px 11px; border-radius: 99px; border: 1px solid var(--line-strong); background: var(--panel); font: 500 12px var(--font); }
+.rec-facts { display: grid; gap: 8px; margin-bottom: 20px; font-size: 13px; }
+.rec-facts li { display: flex; align-items: center; gap: 9px; }
+.rec-facts li::before { content: '✓'; flex: none; width: 17px; height: 17px; display: grid; place-items: center; border-radius: 50%; background: var(--accent); color: var(--on-accent); font: 700 10px/1 var(--font); }
+.rec-demo { position: relative; aspect-ratio: 1; border-radius: 14px; overflow: hidden; background: #111; box-shadow: var(--lift); border: 1px solid rgba(0, 0, 0, 0.25); }
+.rec-demo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform-origin: 50% 50%; animation: recmove 9s ease-in-out infinite; }
+@keyframes recmove {
+  0% { transform: scale(1) translate(0, 0) rotate(0deg); }
+  28% { transform: scale(1.6) translate(0, 0) rotate(0deg); }
+  55% { transform: scale(1.6) translate(-12%, 7%) rotate(0deg); }
+  80% { transform: scale(1.5) translate(-5%, 2%) rotate(-14deg); }
+  100% { transform: scale(1) translate(0, 0) rotate(0deg); }
+}
+.rec-live, .rec-meta { position: absolute; top: 12px; display: inline-flex; align-items: center; gap: 7px; padding: 5px 11px; border-radius: 99px; background: rgba(20, 20, 20, 0.72); color: #fff; font: 600 11.5px var(--mono); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.rec-live { left: 12px; }
+.rec-live i { width: 8px; height: 8px; border-radius: 50%; background: #ff3b3b; animation: recblink 1s infinite; }
+.rec-meta { right: 12px; font-weight: 500; }
+.rec-bar { position: absolute; left: 12px; right: 12px; bottom: 12px; height: 5px; border-radius: 3px; background: rgba(255, 255, 255, 0.35); overflow: hidden; }
+.rec-bar i { display: block; height: 100%; width: 0; background: #fff; animation: recbar 9s linear infinite; }
+@keyframes recbar { from { width: 0; } to { width: 100%; } }
+@media (max-width: 760px) { .rec-feature { grid-template-columns: 1fr; padding: 20px; gap: 20px; } .rec-demo { order: -1; } }
+@media (prefers-reduced-motion: reduce) { .rec-demo img, .rec-live i, .rec-bar i { animation: none; } .rec-bar i { width: 60%; } }
 /* compact tools panel */
 .seg.v { flex-direction: row; gap: 3px; padding: 3px; border-radius: 12px; }
 .seg.v button { flex: 1; min-width: 0; flex-direction: column; justify-content: center; gap: 4px; min-height: 0; height: 50px; padding: 6px 2px; border-radius: 9px; font-size: 11.5px; }
@@ -520,6 +565,7 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
     <div class="stage" id="stage">
       <canvas id="gl" tabindex="0" data-tool="pan" aria-label="Pratinjau mockup. Seret untuk menggeser, scroll untuk zoom, tombol panah untuk menggeser dengan keyboard."></canvas>
       <a class="donate-pop" id="donatePop" hidden href="https://saweria.co/revaldyas" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C1 8.6 2.9 5 6.4 5c2 0 3.7 1.1 4.6 2.7h2C14 6.1 15.7 5 17.6 5c3.5 0 5.4 3.6 4 6.8C19.5 16.4 12 21 12 21z"/></svg><span>Traktir kopi</span></a>
+      <div class="rec-badge" id="recBadge" hidden aria-hidden="true"><i></i><span></span></div>
       <div class="view-hints" aria-hidden="true"><div class="drag-hint"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 12h18M12 3l-3 3M12 3l3 3M12 21l-3-3M12 21l3-3M3 12l3-3M3 12l3 3M21 12l-3-3M21 12l-3 3"/></svg><span>Seret untuk menggeser</span></div><div class="drag-hint mouse-hint"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="6"/><path d="M12 7v4"/></svg><span>Klik roda + seret: orbit</span></div></div>
       <svg class="rays" id="rays" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" hidden><line id="sunLine" x1="50" y1="50" x2="30" y2="30"></line></svg>
       <button type="button" class="sun" id="sun" aria-label="Posisi cahaya. Gunakan tombol panah untuk memindahkan." hidden>
@@ -654,6 +700,42 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
         </div>
       </div>
     </section>
+    <section id="animSec">
+      <h2>Animasi</h2>
+      <div class="ctl">
+        <span class="lbl" id="l-ap">Gerakan</span>
+        <select id="animPreset" aria-labelledby="l-ap">
+            <option value="zoomIn">Zoom masuk</option>
+            <option value="zoomOut">Zoom keluar</option>
+            <option value="panRight">Geser ke kanan</option>
+            <option value="panLeft">Geser ke kiri</option>
+            <option value="panDown">Geser ke bawah</option>
+            <option value="panUp">Geser ke atas</option>
+            <option value="spin">Putar grid</option>
+            <option value="zoomSpin">Zoom masuk + putar</option>
+            <option value="drift">Melayang (geser dan zoom)</option>
+            <option value="pulse">Denyut (zoom masuk dan keluar)</option>
+            <option value="orbit">Orbit (putar dan miring)</option>
+        </select>
+      </div>
+      <div class="ctl"><label for="animSpeed">Kecepatan</label><output id="o-animSpeed" for="animSpeed">1×</output>
+        <input type="range" id="animSpeed" min="0.25" max="3" step="0.05" value="1"></div>
+      <div class="ctl"><label for="animDur">Durasi</label><output id="o-animDur" for="animDur">6 s</output>
+        <input type="range" id="animDur" min="2" max="30" step="1" value="6"></div>
+      <div class="ctl">
+        <span class="lbl" id="l-av">Lebar video</span>
+        <div class="seg" role="radiogroup" aria-labelledby="l-av" data-key="vidW">
+          <button type="button" role="radio" aria-checked="false" data-v="720">720</button>
+          <button type="button" role="radio" aria-checked="true" data-v="1080">1080</button>
+        </div>
+      </div>
+      <div class="row">
+        <button type="button" class="btn" id="animPreview">Pratinjau</button>
+        <button type="button" class="btn solid" id="animRec">Rekam dan simpan</button>
+      </div>
+      <div class="aprog" id="animProg" hidden><i></i></div>
+      <p id="animStatus" class="hint" role="status" aria-live="polite"></p>
+    </section>
     <div class="side-donate" id="sideDonate">
       <p>Suka dengan Flatlay Mockup? Gratis dipakai, dukungan Anda membantu pengembangannya.</p>
       <a class="btn donate block" href="https://saweria.co/revaldyas" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C1 8.6 2.9 5 6.4 5c2 0 3.7 1.1 4.6 2.7h2C14 6.1 15.7 5 17.6 5c3.5 0 5.4 3.6 4 6.8C19.5 16.4 12 21 12 21z"/></svg><span>Dukung lewat Saweria</span></a>
@@ -710,6 +792,28 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
           <figure class="shot sq"><img src="assets/shots/tool-rotate.webp" alt="" loading="lazy" decoding="async"><figcaption class="mcard"><span class="mico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v5h-5"/></svg></span><div><strong>Putar</strong><p>Seret di kanvas untuk memutar sudut susunan kartu, mirip memutar meja foto.</p></div></figcaption></figure>
           <figure class="shot sq"><img src="assets/shots/tool-light.webp" alt="" loading="lazy" decoding="async"><figcaption class="mcard"><span class="mico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></span><div><strong>Cahaya</strong><p>Seret ikon matahari untuk mengubah arah cahaya. Bayangan kartu ikut berpindah.</p></div></figcaption></figure>
         </div></section>
+        <section class="m-sec"><h4>Rekam animasi</h4>
+          <div class="rec-feature">
+            <div class="rec-copy">
+              <span class="eyebrow rec-new">Baru</span>
+              <h3>Ubah mockup jadi video</h3>
+              <p>Pilih gerakan kamera, atur kecepatan dan durasi, lalu rekam. Cocok untuk reels, story, dan presentasi.</p>
+              <ul class="rec-chips">
+                <li>Zoom masuk</li><li>Zoom keluar</li><li>Geser ke kanan</li><li>Putar grid</li><li>Zoom masuk + putar</li><li>Orbit (putar dan miring)</li>
+              </ul>
+              <ul class="rec-facts">
+                <li>11 gerakan siap pakai</li><li>Kecepatan dan durasi bisa diatur</li><li>Simpan sebagai MP4 atau WebM</li>
+              </ul>
+              <button type="button" class="btn solid" id="aboutAnim">Coba sekarang</button>
+            </div>
+            <div class="rec-demo" aria-hidden="true">
+              <img src="assets/shots/square.webp" alt="" loading="lazy" decoding="async">
+              <span class="rec-live"><i></i>REC</span>
+              <span class="rec-meta">1080 × 1080 · MP4</span>
+              <span class="rec-bar"><i></i></span>
+            </div>
+          </div>
+        </section>
         <section class="m-sec"><h4>Fitur</h4><div class="grid2">
           <div class="mcard row"><span class="mico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg></span><div><strong>Dua mode layout</strong><p>Uniform membuat semua kartu sama ukuran. Free menjaga rasio asli tiap gambar, jadi poster tinggi dan kotak bisa campur.</p></div></div>
           <div class="mcard row"><span class="mico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 2l4 4-4 4M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4M21 13v2a3 3 0 0 1-3 3H3"/></svg></span><div><strong>Ulang atau sekali</strong><p>Ulang desain sampai kanvas penuh, atau tampilkan tiap desain satu kali saja.</p></div></div>
@@ -719,6 +823,8 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
           <div class="mcard row"><span class="mico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 9a7 7 0 1 1-14 0z"/></svg></span><div><strong>Warna latar</strong><p>Pilih warna siap pakai atau ambil warna sendiri dari pemilih warna.</p></div></div>
           <div class="mcard row"><span class="mico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg></span><div><strong>PNG dan WebP</strong><p>PNG tajam tanpa kompresi. WebP file-nya lebih kecil, dan kualitasnya bisa kamu atur.</p></div></div>
           <div class="mcard row"><span class="mico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span><div><strong>Dua bahasa</strong><p>Ganti Indonesia atau English kapan saja lewat tombol ID / EN.</p></div></div>
+          <div class="mcard row"><span class="mico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h10M18 6h2M4 12h2M10 12h10M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></span><div><strong>10 preset tampilan</strong><p>Dari diagonal klasik sampai story gelap yang dramatis. Pilih dari menu di bawah daftar gambar, lalu ubah sesukamu.</p></div></div>
+          <div class="mcard row"><span class="mico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2.5"/><path d="M16 10.5l5-3v9l-5-3z"/></svg></span><div><strong>Rekam animasi</strong><p>Rekam zoom, geser, putar, atau orbit jadi video MP4 atau WebM langsung dari browser.</p></div></div>
         </div></section>
         <section class="m-sec"><h4>Pintasan keyboard</h4><p class="m-note">Klik kanvas dulu, lalu tekan tombol berikut.</p><ul class="keys">
           <li><kbd>Panah</kbd><span>Geser kanvas</span></li>
@@ -925,13 +1031,42 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
   "Ctrl + roda + seret": "Ctrl + middle drag",
   "Orbit: putar grid dan miringkan kamera": "Orbit: turn the grid and tilt the camera",
   "Klik roda + seret: orbit": "Middle drag: orbit",
+  "Animasi": "Animation",
+  "Gerakan": "Move",
+  "Zoom masuk": "Zoom in",
+  "Zoom keluar": "Zoom out",
+  "Geser ke kanan": "Slide right",
+  "Geser ke kiri": "Slide left",
+  "Geser ke bawah": "Slide down",
+  "Geser ke atas": "Slide up",
+  "Putar grid": "Spin grid",
+  "Zoom masuk + putar": "Zoom in and spin",
+  "Melayang (geser dan zoom)": "Drift (slide and zoom)",
+  "Denyut (zoom masuk dan keluar)": "Pulse (zoom in and out)",
+  "Orbit (putar dan miring)": "Orbit (spin and tilt)",
+  "Kecepatan": "Speed",
+  "Durasi": "Duration",
+  "Lebar video": "Video width",
+  "Pratinjau": "Preview",
+  "Rekam dan simpan": "Record and save",
+  "Rekam animasi": "Record animation",
+  "Baru": "New",
+  "Ubah mockup jadi video": "Turn your mockup into a video",
+  "Pilih gerakan kamera, atur kecepatan dan durasi, lalu rekam. Cocok untuk reels, story, dan presentasi.": "Pick a camera move, set speed and duration, then record. Great for reels, stories and presentations.",
+  "11 gerakan siap pakai": "11 ready-made moves",
+  "Kecepatan dan durasi bisa diatur": "Speed and duration are adjustable",
+  "Simpan sebagai MP4 atau WebM": "Save as MP4 or WebM",
+  "Coba sekarang": "Try it now",
+  "10 preset tampilan": "10 look presets",
+  "Dari diagonal klasik sampai story gelap yang dramatis. Pilih dari menu di bawah daftar gambar, lalu ubah sesukamu.": "From classic diagonal to a dramatic dark story. Pick from the menu under the image list, then tweak it your way.",
+  "Rekam zoom, geser, putar, atau orbit jadi video MP4 atau WebM langsung dari browser.": "Record a zoom, slide, spin or orbit as an MP4 or WebM video right in your browser.",
   "Donasi lewat Saweria": "Donate via Saweria",
   "Donasi": "Donate",
   "Traktir kopi": "Buy me a coffee"
 };
   let LANG = '';
   try { LANG = localStorage.getItem('flatlay-lang') || ''; } catch (e) { LANG = ''; }
-  if (LANG !== 'id' && LANG !== 'en') LANG = /^id\b/i.test(navigator.language || '') ? 'id' : 'en';
+  if (LANG !== 'id' && LANG !== 'en') LANG = 'id';
   function tr(k, v) {
     let s = LANG === 'en' && EN[k] !== undefined ? EN[k] : k;
     if (v) for (const n in v) s = s.split('{' + n + '}').join(String(v[n]));
@@ -1017,6 +1152,11 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
     $('#aboutClose').addEventListener('click', close);
     $('#aboutOk').addEventListener('click', close);
     $('#aboutStart').addEventListener('click', close);
+    $('#aboutAnim').addEventListener('click', function () {
+      close();
+      const sec = $('#animSec');
+      if (sec) sec.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    });
     box.addEventListener('mousedown', function (e) { if (e.target === box) close(); });
     document.addEventListener('keydown', function (e) {
       if (box.hidden) return;
@@ -1035,7 +1175,7 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
   const RATIOS = { '1:1': 1, '4:5': 4 / 5, '9:16': 9 / 16, '16:9': 16 / 9 };
   const CARD_RATIOS = { '1:1': 1, '4:5': 4 / 5, '3:4': 3 / 4 };
   const S = {
-    designs: [], canvasRatio: '1:1', cardRatio: 'auto', angle: 32, size: 40, gap: 4, tilt: 0,
+    vidW: 1080, designs: [], canvasRatio: '1:1', cardRatio: 'auto', angle: 32, size: 40, gap: 4, tilt: 0,
     mode: 'seq', seed: 1, bg: '#a6a6a2', shAmt: 38, shDist: 3, shSoft: 45, glow: 0, lightAngle: 135,
     exportW: 2048, repeat: true, cols: 0, fmt: 'png', quality: 85, panX: 0, panY: 0, zoom: 1, tool: 'pan', lens: 45, radius: 0, layout: 'uniform', flow: 'row'
   };
@@ -1461,6 +1601,7 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
   }
 
   function fit() {
+    if (anim.on && anim.rec) return;
     const w = Math.max(1, Math.round(stage.clientWidth)), h = Math.max(1, Math.round(stage.clientHeight));
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setSize(w, h, false);
@@ -1631,14 +1772,14 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
       const b = e.target.closest('button');
       if (!b) return;
       const key = seg.dataset.key, v = b.dataset.v;
-      S[key] = key === 'exportW' ? +v : key === 'repeat' ? v === '1' : v;
+      S[key] = (key === 'exportW' || key === 'vidW') ? +v : key === 'repeat' ? v === '1' : v;
       markSeg(seg, v);
       if (key === 'repeat' || key === 'layout' || key === 'flow') updateLayoutUI();
       if (key === 'fmt') $('#qWrap').hidden = v !== 'webp';
       if (key === 'tool') setTool(v);
       if (key === 'canvasRatio') frame.style.setProperty('--ratio', RATIOS[v]);
       dims();
-      if (key !== 'exportW' && key !== 'fmt' && key !== 'tool') schedule();
+      if (key !== 'exportW' && key !== 'fmt' && key !== 'tool' && key !== 'vidW') schedule();
     });
   });
 
@@ -1743,6 +1884,7 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
   canvas.addEventListener('mousedown', function (e) { if (e.button === 1) e.preventDefault(); });
   canvas.addEventListener('auxclick', function (e) { if (e.button === 1) e.preventDefault(); });
   canvas.addEventListener('pointerdown', function (e) {
+    if (anim.on) return;
     if (e.pointerType === 'mouse' && e.button > 2) return;
     if (e.button === 1) e.preventDefault();
     try { canvas.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
@@ -1815,10 +1957,12 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
   canvas.addEventListener('pointercancel', endPtr);
   canvas.addEventListener('wheel', function (e) {
     e.preventDefault();
+    if (anim.on) return;
     if (e.altKey) { setAngle(S.angle - e.deltaY * 0.1); return; }
     setZoom(S.zoom * Math.exp(-e.deltaY * (e.ctrlKey ? 0.01 : 0.0015)));
   }, { passive: false });
   canvas.addEventListener('keydown', function (e) {
+    if (anim.on) return;
     const step = WF * 0.04 / S.zoom, map = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, 1], ArrowDown: [0, -1] };
     if (e.key === '+' || e.key === '=') { e.preventDefault(); setZoom(S.zoom * 1.1); return; }
     if (e.key === '-') { e.preventDefault(); setZoom(S.zoom / 1.1); return; }
@@ -1962,7 +2106,7 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
   }
 
   /* ---------- sliders: manual value input ---------- */
-  const UNITS = { angle: '°', size: '%', gap: '%', radius: '%', tilt: '°', lens: 'mm', lightAngle: '°', shAmt: '%', shDist: '%', glow: '%', quality: '%' };
+  const UNITS = { animSpeed: '×', animDur: 's', angle: '°', size: '%', gap: '%', radius: '%', tilt: '°', lens: 'mm', lightAngle: '°', shAmt: '%', shDist: '%', glow: '%', quality: '%' };
   function enhanceSliders() {
     $$('input[type=range]').forEach(function (el) {
       const wrap = document.createElement('div');
@@ -2001,6 +2145,10 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
 
   /* ---------- help popups with animated demos ---------- */
   const HELP = {
+    animPreset: ['Pilih gerakan kamera untuk animasi: zoom masuk atau keluar, geser ke satu arah, putar grid, atau kombinasi. Gerakan dimulai dari tampilan yang sedang Anda atur dan tampilan dikembalikan setelah selesai.', 'Pick the camera move for the animation: zoom in or out, slide in one direction, spin the grid, or a mix. The move starts from the view you have now, and the view is restored when it ends.'],
+    animSpeed: ['Seberapa cepat gerakan berjalan. 1× adalah normal, 2× dua kali lebih cepat, 0,5× separuhnya. Zoom berhenti di batas 40% sampai 400%.', 'How fast the move runs. 1× is normal, 2× is twice as fast, 0.5× is half. Zoom stops at the 40% to 400% limits.'],
+    animDur: ['Lama animasi dalam detik. Dengan kecepatan yang sama, durasi lebih panjang berarti gerakan menempuh jarak lebih jauh.', 'Length of the animation in seconds. At the same speed, a longer duration means the move travels further.'],
+    vidW: ['Lebar video dalam piksel. 1080 cocok untuk Instagram dan TikTok, 720 untuk file lebih kecil. Format MP4 dipakai jika browser mendukung, kalau tidak WebM.', 'Video width in pixels. 1080 suits Instagram and TikTok, 720 gives a smaller file. MP4 is used when the browser supports it, otherwise WebM.'],
     preset: ['Kumpulan pengaturan siap pakai: sudut, ukuran, bayangan, warna latar, dan rasio kanvas. Gambar yang sudah Anda unggah tidak berubah, dan Anda tetap bisa mengubah slider sesudahnya.', 'Ready-made sets of settings: angle, size, shadow, background and canvas ratio. Your uploaded images stay the same, and you can still change any slider afterwards.'],
     canvasRatio: ['Bentuk gambar hasil akhir. 1:1 untuk post persegi, 4:5 untuk feed Instagram, 9:16 untuk story atau reels, 16:9 untuk banner dan thumbnail. Ukuran ekspor mengikuti rasio ini.', 'The shape of the final image. 1:1 for square posts, 4:5 for Instagram feed, 9:16 for stories and reels, 16:9 for banners and thumbnails. Export size follows this ratio.'],
     layout: ['Seragam: semua kartu dipotong ke bentuk yang sama, jadi grid selalu rapi. Bebas: tiap gambar mempertahankan rasio aslinya, jadi ukuran kartu bisa berbeda-beda.', 'Uniform: every card is cropped to the same shape, so the grid stays tidy. Free: each image keeps its own ratio, so cards can have different sizes.'],
@@ -2025,7 +2173,7 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
     exportW: ['Lebar gambar hasil dalam piksel. Tinggi mengikuti rasio kanvas. Angka lebih besar lebih tajam, tapi file lebih besar dan ekspor lebih lama.', 'Width of the saved image in pixels. Height follows the canvas ratio. A bigger number is sharper, but the file is larger and export takes longer.'],
     quality: ['Kualitas kompresi WebP. Makin tinggi makin tajam tapi file lebih besar. 80 sampai 90% biasanya sudah sangat bagus.', 'WebP compression quality. Higher is sharper but the file is larger. 80 to 90% is usually very good.', 'Hanya muncul saat Format = WebP.', 'Only shown when Format = WebP.']
   };
-  const HELP_LABELS = { preset: 'label[for="preset"]', canvasRatio: '#l-cv', layout: '#l-ly', flow: '#l-fl', cardRatio: '#l-cd', repeat: '#l-rp', cols: '#l-cols', angle: 'label[for="angle"]', size: 'label[for="size"]', gap: 'label[for="gap"]', radius: 'label[for="radius"]', tilt: 'label[for="tilt"]', lens: 'label[for="lens"]', mode: '#l-md', lightAngle: 'label[for="lightAngle"]', shAmt: 'label[for="shAmt"]', shDist: 'label[for="shDist"]', shSoft: 'label[for="shSoft"]', glow: 'label[for="glow"]', bg: '#l-bg', fmt: '#l-fmt', exportW: '#l-ew', quality: '#l-q' };
+  const HELP_LABELS = { preset: 'label[for="preset"]', canvasRatio: '#l-cv', layout: '#l-ly', flow: '#l-fl', cardRatio: '#l-cd', repeat: '#l-rp', cols: '#l-cols', angle: 'label[for="angle"]', size: 'label[for="size"]', gap: 'label[for="gap"]', radius: 'label[for="radius"]', tilt: 'label[for="tilt"]', lens: 'label[for="lens"]', mode: '#l-md', lightAngle: 'label[for="lightAngle"]', shAmt: 'label[for="shAmt"]', shDist: 'label[for="shDist"]', shSoft: 'label[for="shSoft"]', glow: 'label[for="glow"]', bg: '#l-bg', fmt: '#l-fmt', exportW: '#l-ew', quality: '#l-q', animPreset: '#l-ap', animSpeed: 'label[for="animSpeed"]', animDur: 'label[for="animDur"]', vidW: '#l-av' };
   function enhanceHelp() {
     Object.keys(HELP_LABELS).forEach(function (key) {
       const lab = $(HELP_LABELS[key]);
@@ -2094,6 +2242,10 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
       setup: function (s) { s.stage.innerHTML = '<div class="dm-q"></div>'; s.q = s.stage.firstChild; s.capEl = document.createElement('div'); s.capEl.className = 'dm-cap'; s.stage.appendChild(s.capEl); s.cap = function (x) { s.capEl.textContent = x; }; },
       tick: function (t, p, s) { const q = lerp(40, 100, p); s.q.style.filter = 'blur(' + lerp(2.6, 0, p) + 'px)'; s.cap(Math.round(q) + '%  ·  ' + (lerp(0.4, 1.6, p)).toFixed(1) + ' MB'); }
     },
+    animPreset: { tick: function (t, p, s) { const step = Math.floor(t / 1.6) % 3, f = (t % 1.6) / 1.6, e = (1 - Math.cos(f * Math.PI)) / 2; s.set('--sc', 1); s.set('--tx', '0px'); s.set('--ang', '0deg'); if (step === 0) { s.set('--sc', 1 + 0.9 * e); s.cap(L2('Zoom masuk', 'Zoom in')); } else if (step === 1) { s.set('--tx', -60 * e + 'px'); s.cap(L2('Geser', 'Pan')); } else { s.set('--ang', 70 * e + 'deg'); s.cap(L2('Putar', 'Spin')); } } },
+    animSpeed: { tick: function (t, p, s) { const v = lerp(0.25, 3, p); s.set('--ang', '0deg'); s.set('--tx', -(v / 3) * 90 + 'px'); s.cap(v.toFixed(2) + '×'); } },
+    animDur: { tick: function (t, p, s) { const D = [3, 6, 12][Math.floor(t / 1.8) % 3], f = (t % 1.8) / 1.8; s.set('--ang', '0deg'); s.set('--tx', -(D / 12) * 90 * f + 'px'); s.cap(D + ' s'); } },
+    vidW: { setup: function (s) { s.stage.innerHTML = '<div class="dm-px"></div>'; s.px = s.stage.firstChild; s.capEl = document.createElement('div'); s.capEl.className = 'dm-cap'; s.stage.appendChild(s.capEl); s.cap = function (x) { s.capEl.textContent = x; }; }, tick: function (t, p, s) { const w = [720, 1080][Math.floor(t / 1.4) % 2], k = 60 + (w - 720) / 360 * 50; s.px.style.width = k * 1.6 + 'px'; s.px.style.height = k * 0.9 + 'px'; s.px.textContent = w; s.cap(w + ' px'); } },
     preset: {
       tick: function (t, p, s) {
         const P = [{ a: 0, w: 38, r: 4, bg: '#ffffff', tl: 0, sa: .15 }, { a: -22, w: 30, r: 2, bg: '#222222', tl: 0, sa: .6 }, { a: 28, w: 34, r: 4, bg: '#a6a6a2', tl: 36, sa: .5 }, { a: 40, w: 36, r: 15, bg: '#e7e7e4', tl: 0, sa: .4 }],
@@ -2164,6 +2316,141 @@ h2 { color: var(--accent); font-size: 10px; letter-spacing: .13em; }
     if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
     else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
   }, true);
+
+  /* ---------- animation: preview and record camera moves ---------- */
+  const K_ZOOM = 0.15, K_PAN = 0.8, K_SPIN = 20;
+  const panOff = function (t, D, v, b) { return K_PAN * v * (t - D / 2) / b.zoom; };
+  const ANIMS = {
+    zoomIn: function (t, u, v, D, b) { return { zoom: b.zoom * Math.exp(K_ZOOM * v * t) }; },
+    zoomOut: function (t, u, v, D, b) { const F = Math.min(Math.exp(K_ZOOM * v * D), 4 / b.zoom); return { zoom: b.zoom * Math.max(1, F * Math.exp(-K_ZOOM * v * t)) }; },
+    panRight: function (t, u, v, D, b) { return { panX: b.panX + panOff(t, D, v, b) }; },
+    panLeft: function (t, u, v, D, b) { return { panX: b.panX - panOff(t, D, v, b) }; },
+    panDown: function (t, u, v, D, b) { return { panY: b.panY - panOff(t, D, v, b) }; },
+    panUp: function (t, u, v, D, b) { return { panY: b.panY + panOff(t, D, v, b) }; },
+    spin: function (t, u, v, D, b) { return { angle: b.angle - K_SPIN * v * t }; },
+    zoomSpin: function (t, u, v, D, b) { return { zoom: b.zoom * Math.exp(K_ZOOM * v * t), angle: b.angle - K_SPIN * 0.7 * v * t }; },
+    drift: function (t, u, v, D, b) { const o = panOff(t, D, v, b) * 0.7; return { zoom: b.zoom * Math.exp(K_ZOOM * 0.5 * v * t), panX: b.panX + o, panY: b.panY - o }; },
+    pulse: function (t, u, v, D, b) { const A = Math.min(K_ZOOM * v * D / 2, Math.log(4 / b.zoom)); return { zoom: b.zoom * Math.exp(A * (1 - Math.cos(2 * Math.PI * u)) / 2) }; },
+    orbit: function (t, u, v, D, b) { const dir = b.tilt < 20 ? 1 : -1; return { angle: b.angle - K_SPIN * 0.6 * v * t, tilt: b.tilt + dir * 24 * (1 - Math.cos(2 * Math.PI * u)) / 2 }; }
+  };
+  const anim = { on: false, rec: false, raf: 0, t0: 0, base: null, recorder: null, chunks: [], cancelled: false, mime: '' };
+  const animStatus = function (m) { $('#animStatus').textContent = m || ''; };
+
+  function pickMime() {
+    if (!window.MediaRecorder || !canvas.captureStream) return '';
+    const list = ['video/mp4;codecs=avc1.42E01E', 'video/mp4', 'video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm'];
+    for (let i = 0; i < list.length; i++) { try { if (MediaRecorder.isTypeSupported(list[i])) return list[i]; } catch (e) { /* ignore */ } }
+    return '';
+  }
+  function animButtons() {
+    const run = anim.on;
+    $('#animPreview').textContent = run && !anim.rec ? L2('Hentikan', 'Stop') : L2('Pratinjau', 'Preview');
+    $('#animRec').textContent = run && anim.rec ? L2('Batalkan', 'Cancel') : L2('Rekam dan simpan', 'Record and save');
+    $('#animPreview').disabled = run && anim.rec;
+    $('#animRec').disabled = run && !anim.rec;
+    $('#animPreview').dataset.run = run && !anim.rec ? '1' : '';
+    $('#animRec').dataset.run = run && anim.rec ? '1' : '';
+    $('#animProg').hidden = !run;
+    $('#recBadge').hidden = !run;
+    document.body.classList.toggle('anim-run', run);
+  }
+  function restoreView() {
+    const b = anim.base;
+    if (!b) return;
+    S.zoom = b.zoom; S.panX = b.panX; S.panY = b.panY; S.angle = b.angle; S.tilt = b.tilt;
+    zoomLabel(); syncCtl('angle', Math.round(S.angle)); syncCtl('tilt', Math.round(S.tilt));
+  }
+  function animFrame() {
+    if (!anim.on) return;
+    const D = +$('#animDur').value, v = +$('#animSpeed').value;
+    const t = Math.min(D, (performance.now() - anim.t0) / 1000), u = t / D;
+    const pose = ANIMS[$('#animPreset').value](t, u, v, D, anim.base);
+    S.zoom = clamp(pose.zoom !== undefined ? pose.zoom : anim.base.zoom, 0.4, 4);
+    S.panX = clamp(pose.panX !== undefined ? pose.panX : anim.base.panX, -WF * 3, WF * 3);
+    S.panY = clamp(pose.panY !== undefined ? pose.panY : anim.base.panY, -WF * 3, WF * 3);
+    S.angle = wrapDeg(pose.angle !== undefined ? pose.angle : anim.base.angle);
+    S.tilt = clamp(pose.tilt !== undefined ? pose.tilt : anim.base.tilt, 0, 40);
+    build();
+    zoomLabel();
+    $('#animProg').firstChild.style.width = (u * 100) + '%';
+    $('#recBadge').lastChild.textContent = (anim.rec ? L2('Merekam ', 'Recording ') : L2('Pratinjau ', 'Preview ')) + t.toFixed(1) + ' / ' + D + ' s';
+    if (t >= D) { endAnim(false); return; }
+    anim.raf = requestAnimationFrame(animFrame);
+  }
+  function endAnim(cancelled) {
+    if (!anim.on) return;
+    cancelAnimationFrame(anim.raf);
+    anim.cancelled = cancelled;
+    if (anim.rec && anim.recorder && anim.recorder.state !== 'inactive') {
+      /* let the last frame reach the encoder before stopping */
+      setTimeout(function () { try { anim.recorder.stop(); } catch (e) { finishAnim(); } }, cancelled ? 0 : 200);
+      anim.raf = 0;
+      return;
+    }
+    finishAnim();
+  }
+  function finishAnim() {
+    anim.on = false;
+    restoreView();
+    if (anim.rec) fit();
+    animButtons();
+    build();
+  }
+  async function saveVideo(blob, filename, info) {
+    const dl = await getDownloads();
+    if (dl) {
+      try { await dl.save({ filename: filename, data: blob }); animStatus(L2('Video siap disimpan: ', 'Video ready to save: ') + info); }
+      catch (err) { animStatus(err && err.code === 'declined' ? L2('Penyimpanan dibatalkan.', 'Saving was cancelled.') : L2('Video tidak bisa disimpan.', 'The video could not be saved.')); }
+    } else if (window.top !== window) {
+      animStatus(L2('Penyimpanan tidak tersedia di tampilan ini. Buka halaman ini langsung untuk menyimpan video.', 'Saving is not available in this view. Open this page directly to save the video.'));
+    } else {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob); a.download = filename;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+      animStatus(L2('Video diunduh: ', 'Video downloaded: ') + info);
+    }
+  }
+  function startAnim(rec) {
+    if (anim.on) return;
+    if (!S.designs.length) { animStatus(L2('Tambahkan desain dulu.', 'Add designs first.')); return; }
+    animStatus('');
+    anim.base = { zoom: S.zoom, panX: S.panX, panY: S.panY, angle: S.angle, tilt: S.tilt };
+    anim.rec = rec; anim.cancelled = false; anim.chunks = [];
+    if (rec) {
+      const mime = pickMime();
+      if (!mime) { animStatus(L2('Browser ini tidak mendukung perekaman video.', 'This browser cannot record video.')); return; }
+      const W = +S.vidW, H = Math.round(W / RATIOS[S.canvasRatio]);
+      try {
+        renderer.setPixelRatio(1);
+        renderer.setSize(W, H, false);
+        const rc = new MediaRecorder(canvas.captureStream(30), { mimeType: mime, videoBitsPerSecond: W >= 1080 ? 10000000 : 6000000 });
+        rc.ondataavailable = function (e) { if (e.data && e.data.size) anim.chunks.push(e.data); };
+        rc.onstop = async function () {
+          const cancelled = anim.cancelled, type = (rc.mimeType || mime).split(';')[0], ext = type.indexOf('mp4') >= 0 ? 'mp4' : 'webm';
+          const blob = new Blob(anim.chunks, { type: type });
+          finishAnim();
+          if (cancelled) { animStatus(L2('Perekaman dibatalkan.', 'Recording cancelled.')); return; }
+          if (!blob.size) { animStatus(L2('Perekaman gagal. Coba ukuran video yang lebih kecil.', 'Recording failed. Try a smaller video size.')); return; }
+          const mb = blob.size / 1048576;
+          await saveVideo(blob, 'flatlay-mockup-animation-' + W + 'x' + H + '.' + ext, ext.toUpperCase() + ' ' + W + ' × ' + H + ' px, ' + (mb >= 1 ? mb.toFixed(1) + ' MB' : Math.round(mb * 1024) + ' KB'));
+        };
+        anim.recorder = rc;
+        rc.start(250);
+      } catch (err) {
+        fit();
+        animStatus(L2('Perekaman gagal dimulai.', 'Recording could not start.'));
+        return;
+      }
+    }
+    anim.on = true;
+    animButtons();
+    anim.t0 = performance.now();
+    anim.raf = requestAnimationFrame(animFrame);
+  }
+  $('#animPreview').addEventListener('click', function () { if (anim.on) endAnim(true); else startAnim(false); });
+  $('#animRec').addEventListener('click', function () { if (anim.on) endAnim(true); else startAnim(true); });
+  ['animSpeed', 'animDur'].forEach(function (id) { const el = document.getElementById(id); el.addEventListener('input', function () { paint(el); }); });
 
   /* ---------- start ---------- */
   async function init() {

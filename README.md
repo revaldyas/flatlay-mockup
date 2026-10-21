@@ -41,6 +41,7 @@ Upload, arrange, light it, save as PNG or WebP. Everything runs in your browser.
 - **Light and shadow:** drag the sun to set light direction, then tune shadow strength, distance, softness and glow.
 - **Background colour:** presets or any colour from the picker.
 - **Export:** PNG or WebP (adjustable quality), up to 3072 px. The result matches the canvas exactly.
+- **Animation recording:** pick a camera move (zoom, slide, spin, orbit and mixes), set speed and duration, preview it, then record to MP4 or WebM (720 or 1080 px wide).
 - **Indonesian and English** with one click.
 - **Private:** images are processed in your browser and never uploaded.
 
