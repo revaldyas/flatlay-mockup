@@ -487,6 +487,9 @@ body.anim-run .view-hints { display: none; }
   .side { padding: 18px; }
 }
 </style>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+function track(name, data) { try { window.va('event', data ? { name: name, data: data } : { name: name }); } catch (e) { /* analytics optional */ } }</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
 
@@ -2029,6 +2032,7 @@ body.anim-run .view-hints { display: none; }
       const kb = Math.round(blob.size / 1024);
       const sizeTxt = kb >= 1024 ? (kb / 1024).toFixed(1) + ' MB' : kb + ' KB';
       const note = wantWebp && !isWebp ? ' ' + tr('Browser ini tidak bisa membuat WebP, jadi disimpan sebagai PNG.') : '';
+      track('export_image', { format: ext, width: W });
       const dl = await getDownloads();
       if (dl) {
         try {
@@ -2397,6 +2401,7 @@ body.anim-run .view-hints { display: none; }
     build();
   }
   async function saveVideo(blob, filename, info) {
+    track('export_video', { format: filename.split('.').pop(), width: +S.vidW });
     const dl = await getDownloads();
     if (dl) {
       try { await dl.save({ filename: filename, data: blob }); animStatus(L2('Video siap disimpan: ', 'Video ready to save: ') + info); }
@@ -2448,9 +2453,17 @@ body.anim-run .view-hints { display: none; }
     anim.t0 = performance.now();
     anim.raf = requestAnimationFrame(animFrame);
   }
-  $('#animPreview').addEventListener('click', function () { if (anim.on) endAnim(true); else startAnim(false); });
+  $('#animPreview').addEventListener('click', function () { if (anim.on) endAnim(true); else { track('preview_animation'); startAnim(false); } });
   $('#animRec').addEventListener('click', function () { if (anim.on) endAnim(true); else startAnim(true); });
   ['animSpeed', 'animDur'].forEach(function (id) { const el = document.getElementById(id); el.addEventListener('input', function () { paint(el); }); });
+
+  /* ---------- analytics: donate clicks ---------- */
+  document.addEventListener('click', function (e) {
+    const a = e.target.closest && e.target.closest('a[href*="saweria.co"]');
+    if (!a) return;
+    const place = a.id === 'donatePop' ? 'nudge' : a.classList.contains('donate-icon') ? 'header' : a.closest('#sideDonate') ? 'sidebar' : 'about';
+    track('donate_click', { place: place });
+  });
 
   /* ---------- start ---------- */
   async function init() {
